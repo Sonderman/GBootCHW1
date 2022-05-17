@@ -1,7 +1,6 @@
 using DG.Tweening;
 using UnityEngine;
 
-
 public class EnemyScript : MonoBehaviour
 {
     public float duration = 1f;

@@ -1,7 +1,6 @@
 using System;
 using System.Collections;
 using TMPro;
-using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -13,8 +12,8 @@ public class GameManager : MonoBehaviour
     public Transform spawnLocation;
     public Transform cameraLocation;
     public static int life=3;
-    private static int _gold=0;
-    public TextMeshProUGUI goldText;
+    private static int _score=0;
+    public TextMeshProUGUI scoreText;
     public TextMeshProUGUI lifeText;
     public GameObject deadPanel;
     private int currentLevel;
@@ -44,7 +43,7 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    void LateUpdate()
+    private void LateUpdate()
     {
         if (activePlayer != null)
         {
@@ -52,8 +51,8 @@ public class GameManager : MonoBehaviour
             cameraLocation.position = newP;
         }
     }
-    
-    public void SpawnPlayer()
+
+    private void SpawnPlayer()
     {
        activePlayer= Instantiate(playerPrefab, spawnLocation.position, Quaternion.identity);
     }
@@ -88,7 +87,7 @@ public class GameManager : MonoBehaviour
     public void RestartGame()
     {
         life = 3;
-        _gold = 0;
+        _score = 0;
         SceneManager.LoadScene(1);
     }
 
@@ -106,9 +105,9 @@ public class GameManager : MonoBehaviour
         SceneManager.LoadScene(currentLevel + 1);
     }
 
-    public void IncreaseGold()
+    public void IncreaseScore(int value)
     {
-        _gold += 10;
+        _score += value;
         UpdateUI();
     }
 
@@ -118,10 +117,10 @@ public class GameManager : MonoBehaviour
         UpdateUI();
         if (life == 0)
         {
-            StartCoroutine(waiter(1,(KillAndOpenMenu )));
+            StartCoroutine(Waiter(1,(KillAndOpenMenu )));
         }
     }
-    IEnumerator waiter(int seconds,Action doSomething)
+    IEnumerator Waiter(int seconds,Action doSomething)
     {
         yield return new WaitForSeconds(seconds);
         doSomething();
@@ -129,6 +128,6 @@ public class GameManager : MonoBehaviour
     public void UpdateUI()
     {
         lifeText.text = "Life: " + life;
-        goldText.text = "Gold: " + _gold;
+        scoreText.text = "Score: " + _score;
     }
 }
