@@ -6,8 +6,9 @@ TagManager:
   tags:
   - Ground
   - DeadZone
-  - Gold
   - Enemy
+  - Valuable
+  - Gold
   layers:
   - Default
   - TransparentFX

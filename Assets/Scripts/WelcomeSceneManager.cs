@@ -3,21 +3,13 @@ using UnityEngine.SceneManagement;
 
 public class WelcomeSceneManager : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
-    
-    public void onStartButtonPressed()
+    public void onPart1ButtonPressed()
     {
         SceneManager.LoadScene(1);
+    }
+    public void onPart2ButtonPressed()
+    {
+        SceneManager.LoadScene(3);
     }
 
     public void onExitButtonPressed()

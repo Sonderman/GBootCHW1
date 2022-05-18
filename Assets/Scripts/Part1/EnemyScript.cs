@@ -1,3 +1,4 @@
+using System.Reflection;
 using DG.Tweening;
 using UnityEngine;
 
@@ -24,6 +25,7 @@ public class EnemyScript : MonoBehaviour
 
     private void Move()
     {
+        //transform.DOMove(_position2,duration).From(_position).SetLoops(-1);
         transform.DOMove(_position2, duration).SetEase(ease).OnComplete(() =>
         {
             (_position, _position2) = (_position2, _position);

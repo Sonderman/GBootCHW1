@@ -42,6 +42,7 @@ public class PlayerController : MonoBehaviour
         {
             _isGrounded = true;
         }
+
         if (collision.gameObject.CompareTag("Enemy"))
         {
             _rigidbody2D.AddForce(Vector2.up * jumpForce, ForceMode2D.Impulse);
@@ -69,7 +70,7 @@ public class PlayerController : MonoBehaviour
         {
             _rigidbody2D.AddForce(Vector2.right * (_horizontalInput * playerSpeed), ForceMode2D.Force);
         }
-        
+
         if (_animator != null)
         {
             if (_horizontalInput == 0)
@@ -81,7 +82,8 @@ public class PlayerController : MonoBehaviour
                 _animator.enabled = true;
                 RotatePlayer();
             }
-        }else if(_horizontalInput != 0)RotatePlayer();
+        }
+        else if (_horizontalInput != 0) RotatePlayer();
     }
 
     private void RotatePlayer()
