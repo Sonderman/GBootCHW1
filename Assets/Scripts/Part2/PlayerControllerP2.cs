@@ -9,10 +9,12 @@ namespace Part2
         private Rigidbody2D _rigidbody2D;
         private Animator _animator;
         private GameManagerP2 _gameManager;
-        private float _horizontalInput ;
-        private bool _isSpacePressed ;
-        private bool _isGrounded ;
+        private float _horizontalInput;
+        private bool _isSpacePressed;
+        private bool _isGrounded;
         private ParticleSystemController _particleSystemController;
+        public GameObject DeadPS;
+
         private void Start()
         {
             _rigidbody2D = gameObject.GetComponent<Rigidbody2D>();
@@ -47,9 +49,10 @@ namespace Part2
 
             if (collision.gameObject.CompareTag("Enemy"))
             {
-                _rigidbody2D.AddForce(Vector2.up * jumpForce, ForceMode2D.Impulse);
                 _isGrounded = false;
+                _rigidbody2D.AddForce(Vector2.up * jumpForce, ForceMode2D.Impulse);
                 _particleSystemController.StopPS();
+                Instantiate(DeadPS, gameObject.transform.position + new Vector3(0.25f, 0, -2), Quaternion.identity);
                 _gameManager.DecreaseLife();
             }
         }
@@ -60,6 +63,7 @@ namespace Part2
             {
                 _gameManager.KillPlayer();
             }
+
             if (col.gameObject.CompareTag("Finish"))
             {
                 _gameManager.LoadNextLevel();
@@ -72,13 +76,13 @@ namespace Part2
             if (_horizontalInput != 0f)
             {
                 _rigidbody2D.AddForce(Vector2.right * (_horizontalInput * playerSpeed), ForceMode2D.Force);
-                if(!_particleSystemController.IsPlaying()&&_isGrounded)
-                _particleSystemController.StartPS();
+                if (!_particleSystemController.IsPlaying() && _isGrounded)
+                    _particleSystemController.StartPS();
             }
             else
             {
-                if(_particleSystemController.IsPlaying())
-                _particleSystemController.StopPS();
+                if (_particleSystemController.IsPlaying())
+                    _particleSystemController.StopPS();
             }
 
             if (_animator != null)
