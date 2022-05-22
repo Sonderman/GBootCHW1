@@ -3,6 +3,7 @@ using System.Collections;
 using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 namespace Part2
 {
@@ -13,10 +14,11 @@ namespace Part2
         private GameObject _activePlayer;
         public Transform spawnLocation;
         public Transform cameraLocation;
-        public int Life;
+        private float currentHealth;
+        public float maxHealth;
         private int _score = 0;
         public TextMeshProUGUI scoreText;
-        public TextMeshProUGUI lifeText;
+        public Image LifeImage;
         public GameObject deadPanel;
         private int _currentLevel;
 
@@ -31,6 +33,7 @@ namespace Part2
 
         private void Start()
         {
+            currentHealth = maxHealth;
             SpawnPlayer();
             UpdateUI();
             deadPanel.SetActive(false);
@@ -61,8 +64,7 @@ namespace Part2
 
         public void KillPlayer()
         {
-            DecreaseLife();
-            if (Life == 0)
+            if (currentHealth <= 0)
             {
                 KillAndOpenMenu();
             }
@@ -78,7 +80,7 @@ namespace Part2
             Destroy(_activePlayer);
             var informText = deadPanel.gameObject.transform.Find("InformText").GetComponent<TextMeshProUGUI>();
 
-            if (Life == 0)
+            if (currentHealth <= 0)
             {
                 informText.text = "You Are Dead!";
             }
@@ -90,7 +92,7 @@ namespace Part2
 
         public void RestartGame()
         {
-            Life = 3;
+            currentHealth = maxHealth;
             _score = 0;
             SceneManager.LoadScene(3);
         }
@@ -114,11 +116,11 @@ namespace Part2
             UpdateUI();
         }
 
-        public void DecreaseLife()
+        public void DecreaseHealth()
         {
-            Life--;
+            currentHealth-=20f;
             UpdateUI();
-            if (Life == 0)
+            if (currentHealth <= 0)
             {
                 StartCoroutine(Waiter(1, (KillAndOpenMenu)));
             }
@@ -132,7 +134,7 @@ namespace Part2
 
         public void UpdateUI()
         {
-            lifeText.text = "Life: " + Life;
+            LifeImage.fillAmount = currentHealth / maxHealth;
             scoreText.text = "Score: " + _score;
         }
     }

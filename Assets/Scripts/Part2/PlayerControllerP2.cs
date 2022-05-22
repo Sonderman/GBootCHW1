@@ -53,7 +53,7 @@ namespace Part2
                 _rigidbody2D.AddForce(Vector2.up * jumpForce, ForceMode2D.Impulse);
                 _particleSystemController.StopPS();
                 Instantiate(DeadPS, gameObject.transform.position + new Vector3(0.25f, 0, -2), Quaternion.identity);
-                _gameManager.DecreaseLife();
+                _gameManager.DecreaseHealth();
             }
         }
 
