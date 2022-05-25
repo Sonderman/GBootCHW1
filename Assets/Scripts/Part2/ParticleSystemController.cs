@@ -8,7 +8,7 @@ namespace Part2
 
         private void Start()
         {
-            _particleSystem = gameObject.GetComponentInChildren<ParticleSystem>();
+            _particleSystem = GetComponentInChildren<ParticleSystem>();
         }
 
         public void StartPS()

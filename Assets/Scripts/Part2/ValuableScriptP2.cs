@@ -8,6 +8,7 @@ namespace Part2
         public int defaultValue;
         private GameManagerP2 _gameManager;
         private ParticleSystemController _particleSystemController;
+        public bool activateSpinning;
 
         private void Start()
         {
@@ -17,6 +18,7 @@ namespace Part2
 
         private void Update()
         {
+            if(activateSpinning)
             transform.Rotate(Vector3.forward, spinSpeed * Time.deltaTime);
         }
 

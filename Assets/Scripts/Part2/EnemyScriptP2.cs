@@ -30,12 +30,10 @@ namespace Part2
             
             if (MathF.Abs(transform.position.x - _targetPosition.x)<0.05f)
             {
-                //Debug.Log("G1");
                 transform.rotation = Quaternion.Euler(0, range>0? 0:-180, 0);
             }
             else if (MathF.Abs((transform.position.x - _startPosition.x))<0.05f)
             {
-                //Debug.Log("G2"); 
                 transform.rotation = Quaternion.Euler(0, range>0? -180:0, 0);
             }
         }

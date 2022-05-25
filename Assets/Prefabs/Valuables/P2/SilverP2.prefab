@@ -7,6 +7,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: -2209458659299498894, guid: 9e30a22e276999b49a16836c5f819d85, type: 3}
+      propertyPath: m_Controller
+      value: 
+      objectReference: {fileID: 9100000, guid: 93e6ccaef6627bd469cee2db8f3ef31c, type: 2}
     - target: {fileID: 1752113292271392894, guid: 9e30a22e276999b49a16836c5f819d85, type: 3}
       propertyPath: m_Name
       value: SilverP2

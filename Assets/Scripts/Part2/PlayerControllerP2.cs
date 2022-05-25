@@ -13,14 +13,14 @@ namespace Part2
         private bool _isSpacePressed;
         private bool _isGrounded;
         private ParticleSystemController _particleSystemController;
-        public GameObject DeadPS;
+        public GameObject HitParticleSystemObj;
 
         private void Start()
         {
             _rigidbody2D = gameObject.GetComponent<Rigidbody2D>();
             _animator = gameObject.GetComponent<Animator>();
             _gameManager = FindObjectOfType<GameManagerP2>();
-            _particleSystemController = gameObject.GetComponentInChildren<ParticleSystemController>();
+            _particleSystemController = GetComponent<ParticleSystemController>();
         }
 
         private void Update()
@@ -31,6 +31,10 @@ namespace Part2
         private void FixedUpdate()
         {
             MoveHorizontal();
+            if (_rigidbody2D.velocity.y < -0.5f)
+            {
+                _animator.SetBool("isFalling",true);
+            }else _animator.SetBool("isFalling",false);
         }
 
         private void CaptureInputs()
@@ -52,7 +56,7 @@ namespace Part2
                 _isGrounded = false;
                 _rigidbody2D.AddForce(Vector2.up * jumpForce, ForceMode2D.Impulse);
                 _particleSystemController.StopPS();
-                Instantiate(DeadPS, gameObject.transform.position + new Vector3(0.25f, 0, -2), Quaternion.identity);
+                Instantiate(HitParticleSystemObj, gameObject.transform.position + new Vector3(0.25f, 0, -2), Quaternion.identity);
                 _gameManager.DecreaseHealth();
             }
         }
@@ -77,27 +81,20 @@ namespace Part2
             {
                 _rigidbody2D.AddForce(Vector2.right * (_horizontalInput * playerSpeed), ForceMode2D.Force);
                 if (!_particleSystemController.IsPlaying() && _isGrounded)
+                {
                     _particleSystemController.StartPS();
+                    _animator.SetBool("isRunning",true);
+                }
             }
             else
             {
                 if (_particleSystemController.IsPlaying())
+                {
                     _particleSystemController.StopPS();
-            }
-
-            if (_animator != null)
-            {
-                if (_horizontalInput == 0)
-                {
-                    _animator.enabled = false;
-                }
-                else
-                {
-                    _animator.enabled = true;
-                    RotatePlayer();
+                    _animator.SetBool("isRunning",false);
                 }
             }
-            else if (_horizontalInput != 0f) RotatePlayer();
+            RotatePlayer();
         }
 
         private void RotatePlayer()
@@ -112,6 +109,8 @@ namespace Part2
             {
                 _isGrounded = false;
                 _particleSystemController.StopPS();
+                _animator.SetTrigger("Jumping");
+                _animator.SetBool("isRunning",false);
                 _rigidbody2D.AddForce(Vector2.up * jumpForce, ForceMode2D.Impulse);
             }
         }
