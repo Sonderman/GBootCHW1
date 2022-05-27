@@ -9,7 +9,6 @@ namespace Part2
 {
     public class GameManagerP2 : MonoBehaviour
     {
-        private static GameManagerP2 _instanceObj;
         public GameObject playerPrefab;
         private GameObject _activePlayer;
         public Transform spawnLocation;
@@ -21,14 +20,12 @@ namespace Part2
         public Image LifeImage;
         public GameObject deadPanel;
         private int _currentLevel;
+        private AudioManager _audioManager;
 
         private void Awake()
         {
             _currentLevel = SceneManager.GetActiveScene().buildIndex;
-            if (_instanceObj == null)
-            {
-                _instanceObj = this;
-            }
+            _audioManager = FindObjectOfType<AudioManager>();
         }
 
         private void Start()
@@ -71,12 +68,15 @@ namespace Part2
             else
             {
                 Destroy(_activePlayer);
+                currentHealth = maxHealth;
+                UpdateUI();
                 SpawnPlayer();
             }
         }
 
         private void KillAndOpenMenu()
         {
+            _audioManager.PlayClip(AudioManager.AudioClips.Dead,gameObject.transform.position);
             Destroy(_activePlayer);
             var informText = deadPanel.gameObject.transform.Find("InformText").GetComponent<TextMeshProUGUI>();
 

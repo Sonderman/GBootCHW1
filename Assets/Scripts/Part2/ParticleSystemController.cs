@@ -23,6 +23,7 @@ namespace Part2
 
         public bool IsPlaying()
         {
+            if (_particleSystem is null) return false;
             return _particleSystem.isPlaying;
         }
 

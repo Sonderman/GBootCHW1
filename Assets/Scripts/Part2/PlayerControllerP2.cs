@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using UnityEngine;
 
 namespace Part2
@@ -14,6 +15,7 @@ namespace Part2
         private bool _isGrounded;
         private ParticleSystemController _particleSystemController;
         public GameObject HitParticleSystemObj;
+        private AudioManager _audioManager;
 
         private void Start()
         {
@@ -21,6 +23,7 @@ namespace Part2
             _animator = gameObject.GetComponent<Animator>();
             _gameManager = FindObjectOfType<GameManagerP2>();
             _particleSystemController = GetComponent<ParticleSystemController>();
+            _audioManager = FindObjectOfType<AudioManager>();
         }
 
         private void Update()
@@ -53,6 +56,7 @@ namespace Part2
 
             if (collision.gameObject.CompareTag("Enemy"))
             {
+                _audioManager.PlayClip(AudioManager.AudioClips.EnemyHit,gameObject.transform.position);
                 _isGrounded = false;
                 _rigidbody2D.AddForce(Vector2.up * jumpForce, ForceMode2D.Impulse);
                 _particleSystemController.StopPS();
@@ -65,11 +69,14 @@ namespace Part2
         {
             if (col.gameObject.CompareTag("DeadZone"))
             {
+                _audioManager.PlayClip(AudioManager.AudioClips.Fall,gameObject.transform.position);
                 _gameManager.KillPlayer();
             }
 
             if (col.gameObject.CompareTag("Finish"))
             {
+                _audioManager.StopAudio();
+                _audioManager.PlayClip(AudioManager.AudioClips.Finish,gameObject.transform.position);
                 _gameManager.LoadNextLevel();
             }
         }
@@ -106,7 +113,8 @@ namespace Part2
         private void Jump()
         {
             if (_isSpacePressed && _isGrounded)
-            {
+            {   
+                _audioManager.PlayClip(AudioManager.AudioClips.Jump,gameObject.transform.position);
                 _isGrounded = false;
                 _particleSystemController.StopPS();
                 _animator.SetTrigger("Jumping");

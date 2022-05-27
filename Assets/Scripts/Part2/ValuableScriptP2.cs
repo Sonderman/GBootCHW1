@@ -1,5 +1,4 @@
 using UnityEngine;
-
 namespace Part2
 {
     public class ValuableScriptP2 : MonoBehaviour
@@ -9,11 +8,12 @@ namespace Part2
         private GameManagerP2 _gameManager;
         private ParticleSystemController _particleSystemController;
         public bool activateSpinning;
-
+        private AudioManager _audioManager;
         private void Start()
         {
             _gameManager = FindObjectOfType<GameManagerP2>();
             _particleSystemController = gameObject.GetComponent<ParticleSystemController>();
+            _audioManager = FindObjectOfType<AudioManager>();
         }
 
         private void Update()
@@ -27,6 +27,7 @@ namespace Part2
             if (col.gameObject.CompareTag("Player"))
             {
                 _gameManager.IncreaseScore(defaultValue);
+                _audioManager.PlayClip(AudioManager.AudioClips.Pickup,gameObject.transform.position);
                 gameObject.GetComponent<SpriteRenderer>().enabled=false;
                 gameObject.GetComponent<BoxCollider2D>().enabled = false;
                 _particleSystemController.StartPS();

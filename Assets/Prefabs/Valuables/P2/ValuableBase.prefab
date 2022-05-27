@@ -116,7 +116,7 @@ ParticleSystem:
     startLifetime:
       serializedVersion: 2
       minMaxState: 3
-      scalar: 2
+      scalar: 1
       minScalar: 0.5
       maxCurve:
         serializedVersion: 2
@@ -4988,6 +4988,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   spinSpeed: 300
   defaultValue: 0
+  activateSpinning: 0
 --- !u!4 &6331897897746662166 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 5020215372219267042, guid: 86356f86d5ec92f45840938e190f2234, type: 3}
