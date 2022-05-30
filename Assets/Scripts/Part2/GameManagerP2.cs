@@ -76,7 +76,6 @@ namespace Part2
 
         private void KillAndOpenMenu()
         {
-            _audioManager.PlayClip(AudioManager.AudioClips.Dead,gameObject.transform.position);
             Destroy(_activePlayer);
             var informText = deadPanel.gameObject.transform.Find("InformText").GetComponent<TextMeshProUGUI>();
 
@@ -122,6 +121,8 @@ namespace Part2
             UpdateUI();
             if (currentHealth <= 0)
             {
+                _audioManager.StopAudio();
+                _audioManager.PlayClip(AudioManager.AudioClips.Dead,gameObject.transform.position);
                 StartCoroutine(Waiter(1, (KillAndOpenMenu)));
             }
         }
