@@ -1,3 +1,3 @@
-# GBootCHW1
-GameBootcamp Homework 1 <br/>
+# Platformer Game
+This game made by me in GameBootcamp by Techcareer.
 ![logo](Logo.png)
