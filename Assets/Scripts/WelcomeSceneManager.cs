@@ -3,16 +3,11 @@ using UnityEngine.SceneManagement;
 
 public class WelcomeSceneManager : MonoBehaviour
 {
-    public void onPart1ButtonPressed()
+    public void OnStartButtonPressed()
     {
         SceneManager.LoadScene(1);
     }
-    public void onPart2ButtonPressed()
-    {
-        SceneManager.LoadScene(3);
-    }
-
-    public void onExitButtonPressed()
+    public void OnExitButtonPressed()
     {
         Application.Quit();
     }
